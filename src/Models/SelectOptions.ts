@@ -23,6 +23,15 @@ export const algorithmOptions = [
     id: 5,
     text: 'IDEA'
   },
-]
+];
 
-export default algorithmOptions;
+export const operationOptions = [
+  {
+    id: 0,
+    text: 'Cifrar'
+  },
+  {
+    id: 1,
+    text: 'Decifrar'
+  }
+];
