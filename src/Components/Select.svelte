@@ -1,12 +1,11 @@
 <script>
   export let selectedValue;
   export let options;
+  export let label = 'Select';
 </script>
 
 <div class="container">
-    <span>
-        bacon
-    </span>
+    <span>{label}</span>
     <label>
         <select bind:value={selectedValue}>
             {#each options as option}
@@ -27,7 +26,6 @@
 
     span {
         margin-bottom: 0.25rem;
-        text-transform: capitalize;
         color: #333333;
         font-weight: 300;
     }
