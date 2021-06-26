@@ -9,7 +9,7 @@
     <label>
         <select bind:value={selectedValue}>
             {#each options as option}
-                <option value={option.id}>
+                <option value={option}>
                     {option.text}
                 </option>
             {/each}
