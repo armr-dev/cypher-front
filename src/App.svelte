@@ -89,7 +89,6 @@
 		justify-content: center;
 		align-items: center;
 		padding: 1em;
-		max-width: 240px;
 		margin: 0 auto;
 	}
 
@@ -116,6 +115,7 @@
 	.text-wrapper {
 		display: flex;
 		flex-direction: row;
+		flex-wrap: wrap;
 		gap: 2rem;
 	}
 
@@ -124,9 +124,22 @@
 		min-width: 100px;
 	}
 
+	@media (max-width: 1099px) {
+		.text-wrapper {
+			width: min-content;
+		}
+	}
+
 	@media (min-width: 640px) {
 		main {
 			max-width: none;
 		}
 	}
+
+	@media (max-width: 570px) {
+		.select-wrapper {
+			flex-wrap: wrap;
+		}
+	}
+
 </style>
