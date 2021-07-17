@@ -20,7 +20,7 @@
 		return "";
 	};
 
-	const cypherText = async () => {
+	const operateText = async () => {
 		const data = {
 			text: pureText,
 			algorithm: selectedAlgorithm.value,
@@ -34,13 +34,10 @@
 				"Content-Type": "application/json",
 			},
 			body: JSON.stringify(data),
-		}).then((res) => {
-			console.log("AQUI", res);
+		}).then(async (res) => {
+			const textObj = await res.json();
+			operatedText = textObj.data.text;
 		});
-
-		operatedText = await res.json();
-
-		console.log(operatedText);
 
 		return res.json();
 	};
@@ -75,14 +72,14 @@
 			label={`Digite um texto para ${selectedOperation?.text.toLowerCase()}`}
 		/>
 		<Text
-			text={operatedText}
+			bind:text={operatedText}
 			label={`Texto ${textParser(selectedOperation?.text.toLowerCase())}  (${
 				selectedAlgorithm?.text
 			})`}
 		/>
 	</div>
 
-	<button on:click={cypherText}>{selectedOperation?.text}</button>
+	<button on:click={operateText}>{selectedOperation?.text}</button>
 </main>
 
 <style>

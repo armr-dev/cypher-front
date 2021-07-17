@@ -29,6 +29,7 @@
         font-family: Consolas, monaco, monospace;
         padding: 0.5rem;
         border: 1px #999999 dashed;
+        line-break: anywhere;
     }
 
     p {
