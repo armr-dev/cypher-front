@@ -1,37 +1,33 @@
 export const algorithmOptions = [
   {
-    id: 0,
+    value: 'des',
     text: 'DES'
   },
   {
-    id: 1,
+    value: 'aes',
     text: 'AES'
   },
   {
-    id: 2,
+    value: 'blowfish',
     text: 'Blowfish'
   },
   {
-    id: 3,
-    text: 'Twofish'
-  },
-  {
-    id: 4,
+    value: '3des',
     text: '3DES'
   },
   {
-    id: 5,
+    value: 'idea',
     text: 'IDEA'
   },
 ];
 
 export const operationOptions = [
   {
-    id: 0,
+    value: 'cypher',
     text: 'Cifrar'
   },
   {
-    id: 1,
+    value: 'decipher',
     text: 'Decifrar'
   }
 ];

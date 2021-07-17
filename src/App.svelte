@@ -1,20 +1,41 @@
 <script>
+	import { api, queryBuilder } from './server'
 	import TextField from "./Components/TextArea.svelte";
 	import Select from "./Components/Select.svelte";
 	import { algorithmOptions, operationOptions } from "./Models/SelectOptions.ts"
 	import Text from "./Components/Text.svelte";
 
 	let pureText = '';
+	let operatedText = '';
 	let selectedAlgorithm = undefined;
 	let selectedOperation = undefined;
-	let textFieldLabel = `Digite um texto para cifrar`;
 
-	const a = (text) => {
+	const textParser = (text) => {
 		if (text) {
 			return (`${text.slice(0, text.length - 1)}do`)
 		}
 		return '';
 	};
+
+	const cypherText = async () => {
+		const data = {
+			text: pureText,
+			algorithm: selectedAlgorithm.value
+		}
+
+		const res = await fetch(queryBuilder(selectedOperation.value), {
+			method: "POST",
+			mode: "no-cors",
+			cache: "no-cache",
+			body: JSON.stringify(data)
+		})
+
+		operatedText = await res.json()
+
+		console.log(operatedText)
+
+		return res.json()
+	}
 </script>
 
 <main>
@@ -44,10 +65,10 @@
 			bind:value={pureText}
 			label={`Digite um texto para ${selectedOperation?.text.toLowerCase()}`}
 		/>
-		<Text text={pureText} label={`Texto ${a(selectedOperation?.text.toLowerCase())}  (${selectedAlgorithm?.text})`} />
+		<Text text={operatedText} label={`Texto ${textParser(selectedOperation?.text.toLowerCase())}  (${selectedAlgorithm?.text})`} />
 	</div>
 
-	<button>{selectedOperation?.text}</button>
+	<button on:click={cypherText}>{selectedOperation?.text}</button>
 </main>
 
 <style>
