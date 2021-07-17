@@ -1,47 +1,56 @@
 <script>
-	import { api, queryBuilder } from './server'
+	import { api, queryBuilder } from "./server";
 	import TextField from "./Components/TextArea.svelte";
 	import Select from "./Components/Select.svelte";
-	import { algorithmOptions, operationOptions } from "./Models/SelectOptions.ts"
+	import {
+		algorithmOptions,
+		operationOptions,
+	} from "./Models/SelectOptions.ts";
 	import Text from "./Components/Text.svelte";
 
-	let pureText = '';
-	let operatedText = '';
+	let pureText = "";
+	let operatedText = "";
 	let selectedAlgorithm = undefined;
 	let selectedOperation = undefined;
 
 	const textParser = (text) => {
 		if (text) {
-			return (`${text.slice(0, text.length - 1)}do`)
+			return `${text.slice(0, text.length - 1)}do`;
 		}
-		return '';
+		return "";
 	};
 
 	const cypherText = async () => {
 		const data = {
 			text: pureText,
-			algorithm: selectedAlgorithm.value
-		}
+			algorithm: selectedAlgorithm.value,
+		};
 
 		const res = await fetch(queryBuilder(selectedOperation.value), {
 			method: "POST",
-			mode: "no-cors",
+			mode: "cors",
 			cache: "no-cache",
-			body: JSON.stringify(data)
-		})
+			headers: {
+				"Content-Type": "application/json",
+			},
+			body: JSON.stringify(data),
+		}).then((res) => {
+			console.log("AQUI", res);
+		});
 
-		operatedText = await res.json()
+		operatedText = await res.json();
 
-		console.log(operatedText)
+		console.log(operatedText);
 
-		return res.json()
-	}
+		return res.json();
+	};
 </script>
 
 <main>
 	<h1>Cypher!</h1>
-	<p>Por favor, selecione se deseja cifrar ou decifrar um texto.
-		<br>
+	<p>
+		Por favor, selecione se deseja cifrar ou decifrar um texto.
+		<br />
 		Em seguida, selecione o algoritmo de cifragem, digite o texto e clique em 'Cifrar/Decifrar'.
 	</p>
 	<div class="select-wrapper">
@@ -65,7 +74,12 @@
 			bind:value={pureText}
 			label={`Digite um texto para ${selectedOperation?.text.toLowerCase()}`}
 		/>
-		<Text text={operatedText} label={`Texto ${textParser(selectedOperation?.text.toLowerCase())}  (${selectedAlgorithm?.text})`} />
+		<Text
+			text={operatedText}
+			label={`Texto ${textParser(selectedOperation?.text.toLowerCase())}  (${
+				selectedAlgorithm?.text
+			})`}
+		/>
 	</div>
 
 	<button on:click={cypherText}>{selectedOperation?.text}</button>
